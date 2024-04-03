@@ -34,3 +34,5 @@ Route::get('/home',[AdminController::class,'index']);
 
 Route::get('/category_page',[AdminController::class,'category_page']);
 Route::post('/add_category',[AdminController::class,'add_category']);
+
+Route::delete('cat_delete/{id}', [AdminController::class, 'cat_delete'])->name('cat_delete');
