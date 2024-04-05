@@ -1,17 +1,8 @@
- <!-- Bootstrap CSS-->
- <link rel="stylesheet" href="{{asset('admin/vendor/bootstrap/css/bootstrap.min.css')}}">
-    <!-- Font Awesome CSS-->
-    <link rel="stylesheet" href="{{asset('admin/vendor/font-awesome/css/font-awesome.min.css')}}">
-    <!-- Custom Font Icons CSS-->
-    <link rel="stylesheet" href="{{asset('admin/css/font.css')}}">
-    <!-- Google fonts - Muli-->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:300,400,700">
-    <!-- theme stylesheet-->
-    <link rel="stylesheet" href="{{asset('admin/css/style.default.css')}}" id="theme-stylesheet">
-    <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" href="{{asset('admin/css/custom.css')}}">
-    <!-- Favicon-->
-    <link rel="shortcut icon" href="{{asset('admin/img/favicon.ico')}}">
-    <!-- Tweaks for older IEs--><!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+<!-- Custom fonts for this template-->
+<link href="{{asset('admin/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="{{asset('admin/css/sb-admin-2.min.css')}}" rel="stylesheet">

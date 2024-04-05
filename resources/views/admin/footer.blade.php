@@ -1,18 +1,24 @@
-<footer class="footer">
-          <div class="footer__block block no-margin-bottom">
-            <div class="container-fluid text-center">
-              <!-- Please do not remove the backlink to us unless you support us at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
-               <p class="no-margin-bottom">2018 &copy; Your company. Download From <a target="_blank" href="https://templateshub.net">Templates Hub</a>.</p>
-            </div>
-          </div>
-        </footer>
-      
-    <!-- JavaScript files-->
+<footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2021</span>
+                    </div>
+                </div>
+            </footer>
+
+            <!-- Bootstrap core JavaScript-->
     <script src="{{asset('admin/vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{asset('admin/vendor/popper.js/umd/popper.min.js')}}"> </script>
-    <script src="{{asset('admin/vendor/bootstrap/js/bootstrap.min.js')}}"></script>
-    <script src="{{asset('admin/vendor/jquery.cookie/jquery.cookie.js')}}"> </script>
+    <script src="{{asset('admin/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{{asset('admin/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{{asset('admin/js/sb-admin-2.min.js')}}"></script>
+
+    <!-- Page level plugins -->
     <script src="{{asset('admin/vendor/chart.js/Chart.min.js')}}"></script>
-    <script src="{{asset('admin/vendor/jquery-validation/jquery.validate.min.js')}}"></script>
-    <script src="{{asset('admin/js/charts-home.js')}}"></script>
-    <script src="{{asset('admin/js/front.js')}}"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="{{asset('admin/js/demo/chart-area-demo.js')}}"></script>
+    <script src="{{asset('admin/js/demo/chart-pie-demo.js')}}"></script>

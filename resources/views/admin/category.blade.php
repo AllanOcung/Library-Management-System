@@ -1,16 +1,19 @@
 <!DOCTYPE html>
-<html>
-  <head> 
+<html lang="en">
+
+<head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Dark Bootstrap Admin </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="all,follow">
+    <meta name="author" content="">
 
-   @include('admin.css')
+    <title>SB Admin 2 - Dashboard</title>
 
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" 
+    @include('admin.css')
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" 
    integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" 
    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
@@ -58,21 +61,22 @@
 <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
 <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap5.js"></script>
 
-  
 
-    
+</head>
 
-  </head>
-  <body>
-  @include('admin.header')
+<body id="page-top">
 
-  <div class="d-flex align-items-stretch">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
     @include('admin.sidebar')
-    <div class="page-content">
-      <div class="page-header">
-        <div class="container-fluid">
 
-          <div class="div_center">
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+        
+        @include('admin.topbar')
+       
+        <div class="div_center">
             <div>
                   @if(session()->has('message'))
 
@@ -117,12 +121,7 @@
                         <td>{{$data->created_at}}</td>
                         <td>{{$data->updated_at}}</td>
                         <td>
-                          <form action="{{ url('cat_delete', $data->id) }}" method="post" class="delete-form">
-                            @csrf
-                            @method('delete')
-                          
-                            <button onclick="confirmation(event)" type="submit" class="btn btn-danger">Delete</button>
-                          </form>
+                              <a href="{{ url('cat_delete', $data->id) }}" class="btn btn-danger">Delete</a>                             
                         </td>
                         
                       </tr>
@@ -132,60 +131,21 @@
                     </table>
              
                 </div>
-               
 
-        </div>       
-      </div>
+       </div>
     </div>
+
+
+    <!-- Footer -->
+    @include('admin.footer')
+    <!-- End of Footer -->
+
+    <script type="text/javascript">
+      new DataTable('#example');
+    </script>
+
+
     
-  </div>
-  @include('admin.footer')
-  
-  <script type="text/javascript">
-  new DataTable('#example');
+</body>
 
-  function confirmation(ev) {
-    ev.preventDefault();
-    var form = $(ev.currentTarget).closest('form'); // Find the parent form
-    var urlToRedirect = form.attr('action'); // Get the form action attribute
-    console.log(urlToRedirect);
-
-    swal({
-      title: "Are you sure to delete this?",
-      text: "You will not be able to revert this!",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    })
-    .then((willCancel) => {
-      if (willCancel) {
-        // Submit the form via AJAX
-        $.ajax({
-          type: "POST",
-          url: urlToRedirect,
-          data: form.serialize(), // Serialize form data
-          success: function(response) {
-            swal("Success!", "The record has been deleted successfully.", "success");
-            // Redirect the user
-            window.location.reload();
-            //window.location.href = response.redirect_url; // You can redirect to a specific URL returned by the server
-          },
-          error: function(xhr, textStatus, errorThrown) {
-            // Handle error response if needed
-            console.error('Error:', errorThrown);
-          }
-        });
-      }
-    });
-  }
-
-  // Attach the confirmation function to the submit event of the delete form
-  $(document).ready(function() {
-    $('.delete-form').submit(function(ev) {
-      confirmation(ev);
-    });
-  });
-</script>
-
-  </body>
 </html>
