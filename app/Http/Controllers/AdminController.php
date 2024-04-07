@@ -8,9 +8,12 @@ use App\Models\User;
 
 use App\Models\Book;
 
+use App\Models\Borrow;
+
 use App\Models\Category;
 
 use Illuminate\Support\Facades\Auth;
+
 
 class AdminController extends Controller
 {
@@ -22,7 +25,15 @@ class AdminController extends Controller
 
             if($usertype == 'admin')
             {
-                return view('admin.index');
+                $user = User::all()->count();
+
+                $book = Book::all()->count();
+
+                $borrow = Borrow::where('status', 'approved')->count();
+
+                $return = Borrow::where('status', 'returned')->count();
+
+                return view('admin.index', compact('user', 'book', 'borrow', 'return'));
             }
 
             else if($usertype == 'user')
@@ -37,6 +48,12 @@ class AdminController extends Controller
         {
             return redirect()->back();
         }
+    }
+
+    public function show_members()
+    {
+        $data = User::all();
+        return view('admin.show_members', compact('data'));
     }
 
     public function category_page()
@@ -130,5 +147,106 @@ class AdminController extends Controller
 
         return redirect()->back()->with('message', 'Book successfully Deleted!');
     }
+
+    public function show_book_requests()
+    {
+        $data = Borrow::where('status', 'pending')->get();
+        
+        return view('admin.show_book_requests', compact('data'));
+    }
+
+    public function show_approved_requests()
+    {
+        $data = Borrow::where('status', 'approved')->get();
+        
+        return view('admin.show_approved_requests', compact('data'));
+    }
+
+    public function show_rejected_requests()
+    {
+        $data = Borrow::where('status', 'rejected')->get();
+        
+        return view('admin.show_rejected_requests', compact('data'));
+    }
+
+    public function borrowed_books()
+    {
+        $data = Borrow::where('status', 'approved')->get();
+        
+        return view('admin.borrowed_books', compact('data'));
+    }
+
+    public function approve_book($id)
+    {
+        $data = Borrow::find($id);
+
+        $status = $data->status;
+        
+
+        if ($status == 'approved') {
+
+            return redirect()->back();
+
+        } else {
+            $data->status = 'approved';
+
+            $data->save();
+    
+            $bookid = $data->book_id;
+    
+            $book = Book::find($bookid);
+    
+            $book_qty = $book->quantity - '1';
+    
+            $book->quantity = $book_qty;
+    
+            $book->save();
+    
+            return redirect()->back();
+        }
+        }
+
+        public function return_book($id)
+    {
+        $data = Borrow::find($id);
+
+        $status = $data->status;
+
+        if ($status == 'returned') {
+
+            return redirect()->back();
+
+        } else {
+            $data->status = 'returned';
+
+            $data->save();
+    
+            $bookid = $data->book_id;
+    
+            $book = Book::find($bookid);
+    
+            $book_qty = $book->quantity + '1';
+    
+            $book->quantity = $book_qty;
+    
+            $book->save();
+    
+            return redirect()->back();
+        }
+        }
+
+        public function reject_book_request($id)
+        {
+            $data = Borrow::find($id);
+
+            // Check if the record exists and its status is 'pending'
+            if ($data && $data->status === 'pending') {
+                
+                $data->status = 'rejected';
+
+                $data->save();
+            }
+            return redirect()->back();
+        }
 
 }

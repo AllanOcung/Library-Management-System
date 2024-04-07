@@ -77,17 +77,18 @@
         @include('admin.topbar')
        
         <div class="div_center">
-            <div>
-                  @if(session()->has('message'))
-
-                      <div class="alert alert-success">
-                      {{session()->get('message')}}
-
-                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
-                      </div>
-    
-                  @endif
-              <div>
+                  <div>
+                      @if(session()->has('message'))
+                          
+                          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                          {{session()->get('message')}}  
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+        
+                      @endif
+                  </div>
 
               <h1 class="cat_label">Add Category</h1>
               <form action="{{url('add_category')}}" method="post" class="form-container">

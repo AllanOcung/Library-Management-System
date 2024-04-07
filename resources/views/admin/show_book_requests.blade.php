@@ -21,6 +21,7 @@
     <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap5.js"></script>
 
+
 </head>
 
 <body id="page-top">
@@ -36,52 +37,41 @@
         @include('admin.topbar')
         
         <div class="container">
-                  <div>
-                      @if(session()->has('message'))
-                          
-                          <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                          {{session()->get('message')}}  
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            </div>
-        
-                      @endif
-                  </div>
 
-                  <h1 class="cat_label">Available Books</h1>
+                 <h1 class="cat_label">Book Requests</h1>
                  <br>
 
                     <table id="example" class="table table-striped" style="width:100%">
 
                         <thead>
                             <tr>
-                            <th>Title</th>
-                            <th>Author</th>
-                            <th>Description</th>
-                            <th>Quantity</th>
-                            <th>Category</th>
-                            <th>Author image</th>
-                            <th>Book image</th>                          
-                            <th>Action</th>                          
+                            <th>Member</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Book</th>
+                            <th>Status</th>                                                   
+                            <th>Actions</th>                                                   
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach($book as $book)
+                        @foreach($data as $data)
                         <tr>
-                            <td>{{$book->title}}</td>
-                            <td>{{$book->author}}</td>
-                            <td>{{$book->description}}</td>
-                            <td>{{$book->quantity}}</td>
-                            <td>{{$book->category->title}}</td>
+                            <td>{{$data->user->name}}</td>
+                            <td>{{$data->user->email}}</td>
+                            <td>{{$data->user->phone}}</td>
                             <td>
-                                <img src="author/{{$book->author_img}}" style="border-radius:  8px; max-width: 60%; max-height: 60%;" />
+                                <div><img src="book/{{$data->book->book_img}}" style="border-radius: 5px; min-width: 50px; max-width: 90px; max-height: 150px;"/></div>
+                                <div>{{$data->book->title}}</div>
                             </td>
                             <td>
-                                <img src="book/{{$book->book_img}}" style="border-radius: 8px; max-width: 60%; max-height: 60%;"/>
+
+                                <span style="color: green;">{{$data->status}}</span>
+
                             </td>
                             <td>
-                              <a href="{{ url('book_delete', $book->id) }}" class="btn btn-danger">Delete</a>                             
+                                <a class="btn btn-warning" href="{{url('approve_book', $data->id)}}">approve</a>
+                                <a class="btn btn-danger" href="{{url('reject_book_request', $data->id)}}">reject</a>
+                                <a class="btn btn-primary" href="{{url('return_book', $data->id)}}">return</a>                                
                             </td>
                                                         
                         </tr>
@@ -91,6 +81,7 @@
                         </table>
 
                     </div>
+
 
     </div>
     
@@ -102,8 +93,6 @@
 
     <script type="text/javascript">
       new DataTable('#example');
-
-    
     </script>
 
     
