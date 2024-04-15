@@ -12,6 +12,8 @@ use App\Models\Borrow;
 
 use App\Models\Category;
 
+use App\Models\Notification;
+
 use Illuminate\Support\Facades\Auth;
 
 
@@ -33,7 +35,9 @@ class AdminController extends Controller
 
                 $return = Borrow::where('status', 'returned')->count();
 
-                return view('admin.index', compact('user', 'book', 'borrow', 'return'));
+                $unreadNotifications = Notification::where('status', 'unread')->get();
+
+                return view('admin.index', compact('user', 'book', 'borrow', 'return', 'unreadNotifications'));
             }
 
             else if($usertype == 'user')
@@ -53,23 +57,33 @@ class AdminController extends Controller
     public function show_members()
     {
         $data = User::all();
-        return view('admin.show_members', compact('data'));
+
+        $unreadNotifications = Notification::where('status', 'unread')->get();
+
+        return view('admin.show_members', compact('data', 'unreadNotifications'));
     }
 
     public function category_page()
     {
         $data = Category::all();
-        return view('admin.category', compact('data'));
+
+        $unreadNotifications = Notification::where('status', 'unread')->get();
+
+        return view('admin.category', compact('data', 'unreadNotifications'));
     }
 
     public function add_category(Request $request)
     {
+        $request->validate([
+            'category' => 'required|unique:categories,title|max:255',
+        ]);
+
         $data = new Category;
         $data->title = $request->category;
 
         $data->save();
 
-        return redirect()->back()->with('message', 'Category added successfully!');
+        return view('admin.add_category');
     }
 
     public function cat_delete($id)
@@ -84,7 +98,10 @@ class AdminController extends Controller
     public function add_book()
     {
         $data = Category::all();
-        return view('admin.add_book', compact('data'));
+
+        $unreadNotifications = Notification::where('status', 'unread')->get();
+        
+        return view('admin.add_book', compact('data', 'unreadNotifications'));
     }
 
     public function store_book(Request $request)
@@ -135,8 +152,10 @@ class AdminController extends Controller
     public function show_book()
     {
         $book = Book::all();
+
+        $unreadNotifications = Notification::where('status', 'unread')->get();
         
-        return view('admin.show_book', compact('book'));
+        return view('admin.show_book', compact('book', 'unreadNotifications'));
     }
 
     public function book_delete($id)
@@ -151,29 +170,46 @@ class AdminController extends Controller
     public function show_book_requests()
     {
         $data = Borrow::where('status', 'pending')->get();
+
+        $unreadNotifications = Notification::where('status', 'unread')->get();
         
-        return view('admin.show_book_requests', compact('data'));
+        return view('admin.show_book_requests', compact('data', 'unreadNotifications'));
+    }
+
+    public function show_pending_requests()
+    {
+        $unreadNotifications = Borrow::where('status', 'pending')->get();
+
+        $unreadNotifications = Notification::where('status', 'unread')->get();
+        
+        return view('admin.show_pending_requests', compact('unreadNotifications'));
     }
 
     public function show_approved_requests()
     {
         $data = Borrow::where('status', 'approved')->get();
+
+        $unreadNotifications = Notification::where('status', 'unread')->get();
         
-        return view('admin.show_approved_requests', compact('data'));
+        return view('admin.show_approved_requests', compact('data', 'unreadNotifications'));
     }
 
     public function show_rejected_requests()
     {
         $data = Borrow::where('status', 'rejected')->get();
+
+        $unreadNotifications = Notification::where('status', 'unread')->get();
         
-        return view('admin.show_rejected_requests', compact('data'));
+        return view('admin.show_rejected_requests', compact('data', 'unreadNotifications'));
     }
 
     public function borrowed_books()
     {
         $data = Borrow::where('status', 'approved')->get();
+
+        $unreadNotifications = Notification::where('status', 'unread')->get();
         
-        return view('admin.borrowed_books', compact('data'));
+        return view('admin.borrowed_books', compact('data', 'unreadNotifications'));
     }
 
     public function approve_book($id)
@@ -222,7 +258,7 @@ class AdminController extends Controller
             $data->save();
     
             $bookid = $data->book_id;
-    
+
             $book = Book::find($bookid);
     
             $book_qty = $book->quantity + '1';
