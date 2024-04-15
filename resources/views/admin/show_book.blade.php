@@ -38,15 +38,19 @@
         <div class="container">
                   <div>
                       @if(session()->has('message'))
-
-                          <div class="alert alert-success">
-                          {{session()->get('message')}}
-
-                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
-                          </div>
+                          
+                          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                          {{session()->get('message')}}  
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
         
                       @endif
                   </div>
+
+                  <h1 class="cat_label">Available Books</h1>
+                 <br>
 
                     <table id="example" class="table table-striped" style="width:100%">
 
@@ -71,7 +75,7 @@
                             <td>{{$book->quantity}}</td>
                             <td>{{$book->category->title}}</td>
                             <td>
-                                <img src="author/{{$book->author_img}}" style="border-radius: 50%; max-width: 60%; max-height: 60%;" />
+                                <img src="author/{{$book->author_img}}" style="border-radius:  8px; max-width: 60%; max-height: 60%;" />
                             </td>
                             <td>
                                 <img src="book/{{$book->book_img}}" style="border-radius: 8px; max-width: 60%; max-height: 60%;"/>

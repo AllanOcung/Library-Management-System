@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>Categories</title>
 
     @include('admin.css')
 
@@ -18,49 +18,67 @@
    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
    <style type="text/css"> 
+   
+    .categories-collections {
+        padding: 50px 0;
+    }
 
-            /* Add CSS styles for the form */
-      .form-container {
-        max-width: 400px; /* Set maximum width for the form container */
-        margin: 0 auto; /* Center the form horizontally */
-      }
+    .categories .section-heading {
+        text-align: center;
+        margin-bottom: 50px;
+    }
 
-      .form-container form {
-        text-align: right; /* Align form elements to the right */
-      }
+    .categories .section-heading h2 {
+        font-size: 32px;
+        color: #333;
+    }
 
-      .form-container label {
-        display: inline-block; /* Make labels inline */
-        width: 150px; /* Set width for labels */
-        text-align: right; /* Align labels to the right */
-        margin-right: 10px; /* Add some space between label and input */
-      }
+    .categories .item {
+        text-align: center;
+        padding: 30px;
+        margin-bottom: 30px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        transition: all 0.3s ease-in-out;
+    }
 
-      .form-container input[type="text"] {
-        width: calc(100% - 160px); /* Calculate width for text input */
-        padding: 5px; /* Add padding to the input */
-        margin-bottom: 10px; /* Add some space between inputs */
-      }
+    .categories .item:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
 
-      .form-container .btn-primary {
-        width: 100%; /* Set button width to fill container */
+    .categories .icon img {
+        max-width: 80px;
+    }
 
-         /* Add CSS styles for the table */
-        }
+    .categories .item h4 {
+        font-size: 24px;
+        margin-top: 20px;
+    }
+
+    .categories .item p {
+        font-size: 14px;
+        color: #666;
+        margin-top: 10px;
+    }
+
+    .categories .btn-danger {
+        margin-top: 20px;
+    }
+
+    .categories-collections .item h4 {
+        color: blue;
+    }
+
+    .gray-tile {
+    background-color: #ccc; /* Gray color */
+    padding: 20px; /* Adjust padding as needed */
+    border-radius: 10px; /* Add rounded corners */
+    /* Add any other styling you desire */
+}
 
             
    </style>
-
-
-
-<link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css">
-
-
-<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
-<script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap5.js"></script>
-
 
 </head>
 
@@ -77,61 +95,51 @@
         @include('admin.topbar')
        
         <div class="div_center">
-            <div>
-                  @if(session()->has('message'))
+                  <div>
+                      @if(session()->has('message'))
+                          
+                          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                          {{session()->get('message')}}  
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+        
+                      @endif
+                  </div>
 
-                      <div class="alert alert-success">
-                      {{session()->get('message')}}
-
-                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+          <div class="categories-collections">
+              <div class="container">
+                  <div class="row">
+                      <div class="col-lg-12">
+                          <div class="categories">
+                              <div class="row">
+                                  <div class="col-lg-12">
+                                      <div class="section-heading">
+                                          <div class="line-dec"></div>
+                                          <h2>Browse Through Book <em>Categories</em> Here.</h2>
+                                      </div>
+                                  </div>
+                                  @foreach($data as $category)
+                                  <div class="col-lg-4 col-md-6 col-sm-6">
+                                      <div class="item gray-tile">
+                                          <div class="icon">
+                                              <img src="assets/images/icon-{{$loop->index + 1}}.png" alt="">
+                                          </div>
+                                          <h4>{{$category->title}}</h4>
+                                          <p>Added on: {{$category->created_at}}</p>
+                                          <a href="{{ url('cat_delete', $category->id) }}" class="btn btn-danger">Delete</a>
+                                      </div>
+                                  </div>
+                                  @endforeach
+                              </div>
+                          </div>
                       </div>
-    
-                  @endif
-              <div>
-
-              <h1 class="cat_label">Add Category</h1>
-              <form action="{{url('add_category')}}" method="post" class="form-container">
-                  @csrf
-                  <span style="padding-right: 15px; padding-top: 15px;">
-                  <label>Category Name</label>
-                  <input type="text" name="category" required>
-                  </span>
-                  <br>
-                  <br>
-                  <input class="btn btn-primary" type="submit" value="Add Category">
-              </form>
+                  </div>
+              </div>
           </div>
-          <br>
-             <div class="container">
 
-                <table id="example" class="table table-striped" style="width:100%">
-
-                    <thead>
-                        <tr>
-                        <th>Category Name</th>
-                        <th>Added on</th>
-                        <th>Updated on</th>
-                        <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                      @foreach($data as $data)
-                      <tr>
-                        <td>{{$data->title}}</td>
-                        <td>{{$data->created_at}}</td>
-                        <td>{{$data->updated_at}}</td>
-                        <td>
-                              <a href="{{ url('cat_delete', $data->id) }}" class="btn btn-danger">Delete</a>                             
-                        </td>
-                        
-                      </tr>
-                      @endforeach
-                      </tbody>
-                     
-                    </table>
-             
-                </div>
-
+         </div>
        </div>
     </div>
 
