@@ -119,7 +119,6 @@
                                 <div class="line-dec"></div>
                                 <p class="book-description"><strong>Description:</strong> {{$book->description}}</p>
                                 <div class="button-group">
-                                    <a class="btn btn-primary" href="{{url('borrow_books', $book->id)}}">Borrow</a>
                                     <a href="{{ url('book_delete', $book->id) }}" class="btn btn-danger">Delete</a>
                                 </div>
                             </div>

@@ -34,6 +34,10 @@ Route::get('/home',[AdminController::class,'index']);
 
 Route::get('/index',[AdminController::class,'index']);
 
+Route::get('/fetch-borrow-data',[AdminController::class,'fetch_borrow_data']);
+
+Route::get('/get-book-counts',[AdminController::class,'get_book_counts']);
+
 Route::get('/show_members',[AdminController::class,'show_members']);
 
 Route::get('/category_page',[AdminController::class,'category_page']);

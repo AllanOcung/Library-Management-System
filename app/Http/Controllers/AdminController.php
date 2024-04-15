@@ -305,4 +305,30 @@ class AdminController extends Controller
             return redirect()->back();
         }
 
+        public function fetch_borrow_data()
+        {
+            // Fetch borrow data from the database
+            $borrowData = Borrow::selectRaw("DATE_FORMAT(created_at, '%b') AS month")
+                ->selectRaw("COUNT(*) AS borrow_count")
+                ->where('status', 'approved')
+                ->groupBy('month')
+                ->get();
+
+            // Return the borrow data as JSON response
+            return response()->json($borrowData);
+        }
+
+        public function get_book_counts()
+        {
+            $totalBooks = Book::count(); // Total number of books
+            $borrowedBooks = Borrow::where('status', 'approved')->count(); // Number of borrowed books
+            $returnedBooks = Borrow::where('status', 'returned')->count(); // Number of returned books
+            
+            return response()->json([
+                'totalBooks' => $totalBooks,
+                'borrowedBooks' => $borrowedBooks,
+                'returnedBooks' => $returnedBooks,
+            ]);
+        }
+
 }

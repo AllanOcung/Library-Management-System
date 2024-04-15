@@ -34,34 +34,45 @@ class HomeController extends Controller
 
 
     public function borrow_books($id)
-    {
-        $book = Book::find($id);
-        $quantity = $book->quantity;
-    
-        if($quantity >= 1) {
-            if(auth()->check()) {
-                $user = auth()->user();
-                $borrow = new Borrow;
-                $borrow->book_id = $book->id;
-                $borrow->user_id = $user->id;
-                $borrow->save();
-    
-                // Create notification for admin
-                $message = "New book request:\n\n " . $user->name . " has requested to borrow the book '" . $book->title . "'.";
-                $notification = new Notification;
-                $notification->message = $message;
-                $notification->status = 'unread';
-                $notification->time = now();
-                $notification->save();
-    
-                return redirect()->back()->with('message', 'Request submitted, waiting Admin approval');
-            } else {
-                return redirect('/login');
-            }
+{
+    $book = Book::find($id);
+    $quantity = $book->quantity;
+
+    // Check if the user is authenticated
+    if(auth()->check()) {
+        $user = auth()->user();
+
+        // Check if the user has already requested the book and its status is either pending or approved
+        $existingRequest = Borrow::where('book_id', $book->id)
+                                 ->where('user_id', $user->id)
+                                 ->whereIn('status', ['pending', 'approved'])
+                                 ->exists();
+
+        if($quantity >= 1 && !$existingRequest) {
+            $borrow = new Borrow;
+            $borrow->book_id = $book->id;
+            $borrow->user_id = $user->id;
+            $borrow->save();
+
+            // Create notification for admin
+            $message = "New book request:\n\n " . $user->name . " has requested to borrow the book '" . $book->title . "'.";
+            $notification = new Notification;
+            $notification->message = $message;
+            $notification->status = 'unread';
+            $notification->time = now();
+            $notification->save();
+
+            return redirect()->back()->with('message', 'Request submitted, waiting Admin approval');
+        } elseif ($existingRequest) {
+            return redirect()->back()->with('message', 'You have already requested this book.');
         } else {
             return redirect()->back()->with('message', 'Not enough books available');
-        }   
+        }
+    } else {
+        return redirect('/login');
     }
+}
+
     
 
     public function book_history()
