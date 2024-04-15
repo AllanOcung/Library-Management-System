@@ -8,6 +8,8 @@ use App\models\Book;
 
 use App\models\Borrow;
 
+use App\models\Notification;
+
 use App\models\Category;
 
 use Illuminate\Support\Facades\Auth;
@@ -30,41 +32,37 @@ class HomeController extends Controller
         return view('home.book_details', compact('data'));
     }
 
+
     public function borrow_books($id)
     {
-        $data = Book::find($id);
-
-        $book_id = $id;
-
-        $quantity = $data->quantity;
-
-        if($quantity >= '1') 
-        {
-            if(auth::id())
-            {
-                $user_id = Auth::user()->id;
-
+        $book = Book::find($id);
+        $quantity = $book->quantity;
+    
+        if($quantity >= 1) {
+            if(auth()->check()) {
+                $user = auth()->user();
                 $borrow = new Borrow;
-
-                $borrow->book_id = $book_id;
-
-                $borrow->user_id = $user_id;
-
+                $borrow->book_id = $book->id;
+                $borrow->user_id = $user->id;
                 $borrow->save();
-
-                return redirect()->back()->with('message','Request submitted, waiting Admin approval');
-            }
-            else
-            {
+    
+                // Create notification for admin
+                $message = "New book request:\n\n " . $user->name . " has requested to borrow the book '" . $book->title . "'.";
+                $notification = new Notification;
+                $notification->message = $message;
+                $notification->status = 'unread';
+                $notification->time = now();
+                $notification->save();
+    
+                return redirect()->back()->with('message', 'Request submitted, waiting Admin approval');
+            } else {
                 return redirect('/login');
             }
-
-        } else 
-        {
-            return redirect()->back()->with('message','Not enough books available');
-        }
-        
+        } else {
+            return redirect()->back()->with('message', 'Not enough books available');
+        }   
     }
+    
 
     public function book_history()
     {
