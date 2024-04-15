@@ -76,6 +76,8 @@ Route::get('/cancel_request/{id}',[HomeController::class,'cancel_request']);
 
 Route::get('/explore',[HomeController::class,'explore']);
 
+Route::get('/my_books',[HomeController::class,'my_books']);
+
 Route::get('/search',[HomeController::class,'search']);
 
 Route::get('/category_search/{id}',[HomeController::class,'category_search']);

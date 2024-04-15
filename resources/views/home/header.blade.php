@@ -33,7 +33,7 @@
                 
                     @auth
 
-                    <li><a href="details.html">My Books</a></li> 
+                    <li><a href="{{url('my_books')}}">My Books</a></li> 
                     <li><a href="{{url('book_history')}}">My History</a></li>
                                 <x-app-layout>
                                 </x-app-layout>

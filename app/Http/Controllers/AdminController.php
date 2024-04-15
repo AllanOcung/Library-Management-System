@@ -262,6 +262,9 @@ class AdminController extends Controller
             return redirect()->back();
 
         } else {
+
+            $user = auth()->user();
+
             $data->status = 'returned';
 
             $data->save();
@@ -273,10 +276,18 @@ class AdminController extends Controller
             $book_qty = $book->quantity + '1';
     
             $book->quantity = $book_qty;
+
+             // Create notification for admin
+             $message = $user->name . " has returned the book '" . $book->title . "'.";
+             $notification = new Notification;
+             $notification->message = $message;
+             $notification->status = 'unread';
+             $notification->time = now();
+             $notification->save();
     
             $book->save();
     
-            return redirect()->back();
+            return redirect()->back()->with('message', 'Book returned successfully!');
         }
         }
 

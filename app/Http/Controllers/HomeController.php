@@ -77,6 +77,21 @@ class HomeController extends Controller
 
      
     }
+    
+    public function my_books()
+    {
+        if(Auth::id())
+        {
+            $userid = Auth::user()->id;
+
+            $data = Borrow::where('user_id', '=', $userid)->get();
+
+            $data = $data->where('status', 'approved');
+
+            return view('home.my_books', compact('data'));
+        }        
+     
+    }
 
     public function cancel_request($id)
     {

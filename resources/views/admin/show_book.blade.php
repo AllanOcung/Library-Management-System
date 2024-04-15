@@ -100,33 +100,33 @@
                   <h4 class="cat_label" style="font-size: 32px; color: #333;">Available <em>Books</em></h4>
                  <br>
                  <div id="books-container" class="d-flex flex-wrap justify-content-center">
-    @foreach($book as $book)
-    <div class="col-lg-6 currently-market-item all msc">
-        <div class="item">
-            <div class="left-image">
-                <img src="book/{{$book->book_img}}" alt="Book Image" class="book-image">
-                <h4 class="book-title">{{$book->title}}</h4>
-            </div>
-            <div class="right-content">
-                
-                <div class="author-info">
-                    <img src="author/{{$book->author_img}}" alt="Author Image" class="author-image">
-                    <h6 class="author-name">{{$book->author}}</h6>
+                    @foreach($book as $book)
+                    <div class="col-lg-6 currently-market-item all msc">
+                        <div class="item">
+                            <div class="left-image">
+                                <img src="book/{{$book->book_img}}" alt="Book Image" class="book-image">
+                                <h4 class="book-title">{{$book->title}}</h4>
+                            </div>
+                            <div class="right-content">
+                                
+                                <div class="author-info">
+                                    <img src="author/{{$book->author_img}}" alt="Author Image" class="author-image">
+                                    <h6 class="author-name">{{$book->author}}</h6>
+                                </div>
+                                <div class="bid-info">
+                                    <strong>Available Copies:</strong> {{$book->quantity}}<br> 
+                                </div>
+                                <div class="line-dec"></div>
+                                <p class="book-description"><strong>Description:</strong> {{$book->description}}</p>
+                                <div class="button-group">
+                                    <a class="btn btn-primary" href="{{url('borrow_books', $book->id)}}">Borrow</a>
+                                    <a href="{{ url('book_delete', $book->id) }}" class="btn btn-danger">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
                 </div>
-                <div class="bid-info">
-                    <strong>Available Copies:</strong> {{$book->quantity}}<br> 
-                </div>
-                <div class="line-dec"></div>
-                <p class="book-description"><strong>Description:</strong> {{$book->description}}</p>
-                <div class="button-group">
-                    <a class="btn btn-primary" href="{{url('borrow_books', $book->id)}}">Borrow</a>
-                    <a href="{{ url('book_delete', $book->id) }}" class="btn btn-danger">Delete</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    @endforeach
-</div>
 
 
 
