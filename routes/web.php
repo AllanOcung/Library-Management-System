@@ -38,6 +38,8 @@ Route::get('/show_members',[AdminController::class,'show_members']);
 
 Route::get('/category_page',[AdminController::class,'category_page']);
 
+Route::get('/category',[AdminController::class,'category']);
+
 Route::post('/add_category',[AdminController::class,'add_category']);
 
 Route::get('/cat_delete/{id}',[AdminController::class,'cat_delete']);

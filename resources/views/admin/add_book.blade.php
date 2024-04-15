@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>Add Book</title>
 
     @include('admin.css')
 
@@ -77,7 +77,7 @@
                     </div>
 
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Add Book</button>
+                        <button type="submit" class="btn btn-primary" style="color: black;">Add Book</button>
                     </div>
                 </form>
             </div>

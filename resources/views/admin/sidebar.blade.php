@@ -45,7 +45,7 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="{{url('add_category')}}">
+        <a class="nav-link" href="{{url('category')}}">
             <i class="fas fa-book"></i>
             <span>Add New Category</span>
         </a>

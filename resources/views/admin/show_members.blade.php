@@ -13,32 +13,42 @@
 
                 
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-        <style>
-            /* Custom CSS */
-            body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            }
-            table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-            }
-            th, td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-            }
-            th {
-            background-color: #f2f2f2;
-            color: black;
-            }
-            tr:nth-child(even) {
-            background-color: #f2f2f2;
-            }
-            tr:hover {
-                background-color: #cceeff; /* Change the color as desired */
-            }
+            
+  <style>
+.container {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    h2 {
+        color: #333;
+        font-size: 28px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid #ddd;
+    }
+
+    .table th, .table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .table th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: #f9f9f9;
+    }
         </style>
         @include('admin.css')
 
@@ -57,28 +67,32 @@
     @include('admin.topbar')
      
         <div class="container">
-            <h2>Members Information</h2>
-            <table class="table table-striped">
+        <h2>Members Information</h2>
+        <div class="table-responsive">
+            <table class="table">
                 <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Address</th>
-                </tr>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                    </tr>
                 </thead>
                 <tbody>
-                @foreach($data as $data)
-                      <tr>
-                        <td>{{$data->name}}</td>
-                        <td>{{$data->email}}</td>
-                        <td>{{$data->phone}}</td>                        
-                        <td>{{$data->address}}</td>                        
-                      </tr>
-                      @endforeach
+                    @foreach($data as $member)
+                    <tr>
+                        <td>{{ $member->name }}</td>
+                        <td>{{ $member->email }}</td>
+                        <td>{{ $member->phone }}</td>
+                        <td>{{ $member->address }}</td>
+                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
+    </div>
+    </div>
+    </div>
 
          
     <!-- Footer -->

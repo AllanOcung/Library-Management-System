@@ -72,6 +72,14 @@ class AdminController extends Controller
         return view('admin.category', compact('data', 'unreadNotifications'));
     }
 
+    public function category()
+    {
+
+        $unreadNotifications = Notification::where('status', 'unread')->get();
+
+        return view('admin.cat_add', compact('unreadNotifications'));
+    }
+
     public function add_category(Request $request)
     {
         $request->validate([
@@ -83,7 +91,8 @@ class AdminController extends Controller
 
         $data->save();
 
-        return view('admin.add_category');
+        return redirect()->back()->with('message', 'Categorey added successfully');
+        
     }
 
     public function cat_delete($id)
