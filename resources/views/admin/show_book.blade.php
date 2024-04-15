@@ -9,17 +9,77 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>Available Books</title>
 
     @include('admin.css')
 
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css">
+    <style>
 
+.item {
+    background-color: gray;
+    color: #ffffff;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
 
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
-    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap5.js"></script>
+.item:hover {
+    background-color: #555555; /* Darker gray */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+  .book-image {
+    border-radius: 20px;
+    min-width: 195px;
+    max-width: 250px;
+    max-height: 250px;
+}
+
+.book-title {
+    margin-top: 10px;
+    font-size: 24px;
+}
+
+.author-info {
+    margin-top: 20px;
+}
+
+.author-image {
+    max-width: 50px;
+    max-height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+}
+
+.author-name {
+    margin-left: 20px;
+}
+
+.bid-info {
+    margin-top: 10px;
+}
+
+.line-dec {
+    border-bottom: 1px solid #ccc;
+    margin: 15px 0;
+}
+
+.book-description {
+    margin-top: 10px;
+}
+
+.button-group {
+    margin-top: 10px;
+}
+
+.button-group .btn {
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+    </style>
 
 </head>
 
@@ -36,61 +96,41 @@
         @include('admin.topbar')
         
         <div class="container">
-                  <div>
-                      @if(session()->has('message'))
-                          
-                          <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                          {{session()->get('message')}}  
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            </div>
-        
-                      @endif
-                  </div>
-
-                  <h1 class="cat_label">Available Books</h1>
+                 
+                  <h4 class="cat_label" style="font-size: 32px; color: #333;">Available <em>Books</em></h4>
                  <br>
+                 <div id="books-container" class="d-flex flex-wrap justify-content-center">
+    @foreach($book as $book)
+    <div class="col-lg-6 currently-market-item all msc">
+        <div class="item">
+            <div class="left-image">
+                <img src="book/{{$book->book_img}}" alt="Book Image" class="book-image">
+                <h4 class="book-title">{{$book->title}}</h4>
+            </div>
+            <div class="right-content">
+                
+                <div class="author-info">
+                    <img src="author/{{$book->author_img}}" alt="Author Image" class="author-image">
+                    <h6 class="author-name">{{$book->author}}</h6>
+                </div>
+                <div class="bid-info">
+                    <strong>Available Copies:</strong> {{$book->quantity}}<br> 
+                </div>
+                <div class="line-dec"></div>
+                <p class="book-description"><strong>Description:</strong> {{$book->description}}</p>
+                <div class="button-group">
+                    <a class="btn btn-primary" href="{{url('borrow_books', $book->id)}}">Borrow</a>
+                    <a href="{{ url('book_delete', $book->id) }}" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endforeach
+</div>
 
-                    <table id="example" class="table table-striped" style="width:100%">
 
-                        <thead>
-                            <tr>
-                            <th>Title</th>
-                            <th>Author</th>
-                            <th>Description</th>
-                            <th>Quantity</th>
-                            <th>Category</th>
-                            <th>Author image</th>
-                            <th>Book image</th>                          
-                            <th>Action</th>                          
-                            </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($book as $book)
-                        <tr>
-                            <td>{{$book->title}}</td>
-                            <td>{{$book->author}}</td>
-                            <td>{{$book->description}}</td>
-                            <td>{{$book->quantity}}</td>
-                            <td>{{$book->category->title}}</td>
-                            <td>
-                                <img src="author/{{$book->author_img}}" style="border-radius:  8px; max-width: 60%; max-height: 60%;" />
-                            </td>
-                            <td>
-                                <img src="book/{{$book->book_img}}" style="border-radius: 8px; max-width: 60%; max-height: 60%;"/>
-                            </td>
-                            <td>
-                              <a href="{{ url('book_delete', $book->id) }}" class="btn btn-danger">Delete</a>                             
-                            </td>
-                                                        
-                        </tr>
-                        @endforeach
-                        </tbody>
-                        
-                        </table>
 
-                    </div>
+                </div>
 
     </div>
     
@@ -99,13 +139,6 @@
     <!-- Footer -->
     @include('admin.footer')
     <!-- End of Footer -->
-
-    <script type="text/javascript">
-      new DataTable('#example');
-
-    
-    </script>
-
     
 </body>
 

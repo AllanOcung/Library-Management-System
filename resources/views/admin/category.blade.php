@@ -37,8 +37,9 @@
         text-align: center;
         padding: 30px;
         margin-bottom: 30px;
-        background-color: #f9f9f9;
+        background-color: #fff;
         border-radius: 10px;
+        border-color: blue;
         transition: all 0.3s ease-in-out;
     }
 

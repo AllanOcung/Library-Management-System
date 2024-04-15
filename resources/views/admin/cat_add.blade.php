@@ -23,7 +23,7 @@
             width: 50%; /* Adjust width as needed */
             margin: 0 auto; /* Center align horizontally */
             text-align: center;
-            color: #ffffff; /* Text color */
+            color: black; /* Text color */
         }
 
         .tile h1 {
