@@ -362,13 +362,5 @@ class AdminController extends Controller
             // Download PDF
             return $pdf->stream('book_inventory_report.pdf');
         }
-
-        public function showBookImages()
-        {
-           // $book = Book::all();
-
-            $books = Book::select('book_img')->get();
-
-            return view('admin.body', compact('books'));
-        }
+        
 }

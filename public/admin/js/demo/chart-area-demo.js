@@ -55,7 +55,8 @@ function updateChart(borrowData) {
         return item.borrow_count; // Assuming 'borrow_count' is the field containing borrow counts
     });
 
-    //months.reverse();
+    months.reverse();
+    borrowCounts.reverse();
 
     // Get the canvas element
     var ctx = document.getElementById('myAreaChart').getContext('2d');
