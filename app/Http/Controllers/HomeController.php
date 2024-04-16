@@ -81,7 +81,9 @@ class HomeController extends Controller
         {
             $userid = Auth::user()->id;
 
-            $data = Borrow::where('user_id', '=', $userid)->get();
+            $data = Borrow::where('user_id', '=', $userid)
+                            ->where('status', 'pending')
+                            ->get();
 
             return view('home.book_history', compact('data'));
         }
@@ -124,12 +126,13 @@ class HomeController extends Controller
 
     public function search(Request $request)
     {
-        
+        $category = Category::all();
+
         $search = $request->search;
 
-        $data = Book::where('title','LIKE', '%'. $search. '%')->get();
+        $data = Book::where('title','LIKE', '%'. $search . '%')->orWhere('author','LIKE', '%'. $search . '%')->get();
 
-        return view('home.explore', compact('data'));
+        return view('home.explore', compact('data', 'category'));
     }
 
     public function category_search($id)

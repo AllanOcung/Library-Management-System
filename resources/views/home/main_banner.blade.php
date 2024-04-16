@@ -20,10 +20,13 @@
           <div class="header-text">
             <h6>Book is Knowledge</h6>
             <h2>Knowledge is Power</h2>
-            <p>Library is a really cool and professional design for your websites. This HTML CSS template is based on Bootstrap v5 and it is designed for related web portals. Liberty can be freely downloaded from github</p>
+            <p style="font-size: large;">"Welcome to Serenity Library Where Knowledge Meets Imagination! Explore our vast collection of books, 
+              discover new worlds, and embark on unforgettable journeys through the pages of literature.
+               Whether you're a student, an avid reader, or a curious mind, our library is your gateway to endless possibilities. 
+              Start your adventure today and let the magic of books inspire you."</p>
             <div class="buttons">
               <div class="border-button">
-                <a href="explore.html">Explore Top Books</a>
+                <a href="{{url('explore')}}">Explore Top Books</a>
               </div>
               <div class="main-button">
                 <a href="" target="_blank">Watch Our Videos</a>

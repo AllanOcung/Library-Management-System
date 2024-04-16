@@ -49,6 +49,12 @@
     .table-striped tbody tr:nth-of-type(odd) {
         background-color: #f9f9f9;
     }
+
+    .section-heading h2 {
+        font-size: 32px;
+        color: #333;
+        margin-bottom: 10px;
+    }
         </style>
         @include('admin.css')
 
@@ -67,7 +73,12 @@
     @include('admin.topbar')
      
         <div class="container">
-        <h2>Members Information</h2>
+        <div class="col-lg-12">
+            <div class="section-heading">
+                <div class="line-dec"></div>
+                <h2>Active <em style="color: blue;">Members</em></h2>
+            </div>
+        </div>
         <div class="table-responsive">
             <table class="table">
                 <thead>

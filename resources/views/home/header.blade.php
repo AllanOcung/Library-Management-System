@@ -25,10 +25,8 @@
                     <!-- ***** Menu Start ***** -->
                     <ul class="nav">
                         <li><a href="{{ Auth::check() ? url('home') : url('index') }}" class="active">Home</a></li>
-                        <li><a href="{{url('explore')}}">Explore</a></li>
-                        <li><a href="details.html">Item Details</a></li>                      
-                        <!-- <li><a href="create.html">Create Yours</a></li> -->
-                            
+                        <li><a href="{{url('explore')}}">Explore</a></li>                   
+                        
                         @if (Route::has('login'))
                 
                     @auth

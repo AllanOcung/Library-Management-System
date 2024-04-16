@@ -38,6 +38,10 @@ Route::get('/fetch-borrow-data',[AdminController::class,'fetch_borrow_data']);
 
 Route::get('/get-book-counts',[AdminController::class,'get_book_counts']);
 
+Route::get('/generateBookInventoryReport',[AdminController::class,'generateBookInventoryReport']);
+
+Route::get('/showBookImages',[AdminController::class,'showBookImages']);
+
 Route::get('/show_members',[AdminController::class,'show_members']);
 
 Route::get('/category_page',[AdminController::class,'category_page']);

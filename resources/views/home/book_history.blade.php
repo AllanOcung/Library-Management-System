@@ -5,41 +5,47 @@
 
    @include('home.css')
 
-   <style type="text/css">
-    /* Styles for the table */
-        #example {
-            border-collapse: collapse;
-            width: 100%;
-        }
+   <style>
+.container {
+        font-family: Arial, sans-serif;
+        max-width: 300px;
+        margin: 0 auto;
+    }
 
-        /* Styles for table header */
-        #example th {
-            background-color: #f2f2f2;
-            border: 0.5px solid #ddd;
-            padding: 8px;
-            text-align: center;
-        }
+    h2 {
+        color: #fff;
+        font-size: 28px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
 
-        /* Styles for table data */
-        #example td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            color: white;
-           
-            margin: auto;
-            text-align: center;
-        }
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid #ddd;
+    }
 
-       
+    .table th, .table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
 
-        .centered-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center; /* Center the text within the column */
-        }
+    .table th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+        color: #333;
+    }
 
-   </style>
+    .table td {
+        
+        color: #fff;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: #f9f9f9;
+    }
+        </style>
     
   </head>
 
@@ -64,7 +70,13 @@
 
         @endif
 
-            <table id="example" class="table table-striped table-bordered" style="width:100%; margin-top: 100px;">
+            <div class="container">
+            <div class="section-heading">
+            <div class="line-dec"></div>
+            <h2>View <em>Request Status</em> Here.</h2>
+          </div>
+            <div class="table-responsive">
+            <table class="table">
                 <thead>
                     <tr>
                         <th>Book</th>
@@ -83,22 +95,15 @@
                         <td>{{$data->book->author}}</td>
                         <td>{{$data->status}}</td>
                         <td>
-
-                            @if($data->status == 'pending')
-
                             <a href="{{url('cancel_request', $data->id)}}" class="btn btn-warning">Cancel</a>
-
-                            @else
-                                <p style="color: #ddd; font-weight: bold;">Not Allowed</p>
-
-                            @endif
                         </td>
                     </tr>
                     @endforeach
                     </tbody>
                 
             </table>
-      
+            </div>
+            </div>
        </div>
       </div>
     </div>

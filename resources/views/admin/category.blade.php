@@ -118,7 +118,7 @@
                                   <div class="col-lg-12">
                                       <div class="section-heading">
                                           <div class="line-dec"></div>
-                                          <h2>Browse Through Book <em>Categories</em> Here.</h2>
+                                          <h2 >Browse Through Book <em style="color: blue;">Categories</em> Here.</h2>
                                       </div>
                                   </div>
                                   @foreach($data as $category)

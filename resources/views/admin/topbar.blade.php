@@ -132,9 +132,10 @@
 
     <!-- Nav Item - User Information -->
     <li class="nav-item dropdown no-arrow">
-    <x-app-layout>
-    </x-app-layout>
-
+        <div>
+            <x-app-layout>
+            </x-app-layout>
+        </div>
     </li>
 
 </ul>

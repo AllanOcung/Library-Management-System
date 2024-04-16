@@ -28,7 +28,7 @@
             <div class="col-lg-6 currently-market-item all msc">
               <div class="item">
                 <div class="left-image">
-                  <img src="book/{{$data->book_img}}" alt="" style="border-radius: 20px; min-width: 195px; max-width: 250px; max-height: 250px;">
+                  <img src="book/{{$data->book_img}}" alt="" style="border-radius: 5px; min-width: 195px; max-width: 250px; max-height: 250px;">
                 </div>
                 <div class="right-content">
                   <h4>{{$data->title}}</h4>
@@ -40,9 +40,11 @@
                   <span class="bid">
                     Current Available<br><strong>{{$data->quantity}}</strong><br> 
                   </span>
-                  <div class="text-button">
-                    <a href="{{url('book_details', $data->id)}}">View Item Details</a>
-                  </div>
+                  <div class="line-dec"></div>
+                  <span class="bid">
+                    Description<strong></strong>
+                    <p>{{$data->description}}</p>
+                  </span>
                   <br>
                   <div class="">
                     <a class="btn btn-primary" href="{{url('borrow_books', $data->id)}}">Borrow</a>

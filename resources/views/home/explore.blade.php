@@ -15,23 +15,46 @@
   <div class="currently-market">
     <div class="container">
       <div class="row">
+
+      <div style="margin-top: 20px;">
+        @if(session()->has('message'))
+
+            <div class="alert alert-success">
+
+            {{session()->get('message')}}
+
+            <button type="button" class="close" data-bs-dismiss="alert" aria-hidden="true">x</button>
+
+            </div>
+
+          @endif
+        </div>
+
+      <div class="col-lg-6" style="margin-top: 50px;">
+          <div class="section-heading">
+            <div class="line-dec"></div>
+            <h2><em>Books</em> Currently In Stock.</h2>
+          </div>
+        </div>
         
 
-        <div class="col-lg-10" style="margin-top: 100px;">
+        <div class="col-lg-10">
           <div class="filters">
             <ul>
-              <li data-filter="*"  class="active">All Books</li>
-
+            <a href="{{url('explore')}}">
+              <li class="active">All Books</li>
+              </a>
               @foreach($category as $category)
               <a href="{{url('category_search', $category->id)}}">
-              <li data-filter=".msc">{{$category->title}}</li>
+              <li>{{$category->title}}</li>
               </a>
-              
               @endforeach
+              
               
             </ul>
           </div>
         </div>
+        
 
         
         <div class="container">
@@ -41,7 +64,7 @@
                         @csrf
                         <div class="row">
                             <div class="col">
-                                <input class="form-control" type="search" name="search" placeholder="Search book by title, author, category">
+                                <input class="form-control" type="search" name="search" placeholder="Search book by title or author" autocomplete="on">
                             </div>
                             <div class="col-auto">
                                 <button class="btn btn-primary" type="submit">Search</button>
@@ -62,7 +85,7 @@
             <div class="col-lg-6 currently-market-item all msc">
               <div class="item">
                 <div class="left-image">
-                  <img src="book/{{$data->book_img}}" alt="" style="border-radius: 20px; min-width: 195px; max-width: 250px; max-height: 250px;">
+                  <img src="book/{{$data->book_img}}" alt="" style="border-radius: 5px; min-width: 195px; max-width: 250px; max-height: 250px;">
                 </div>
                 <div class="right-content">
                   <h4>{{$data->title}}</h4>
@@ -74,9 +97,11 @@
                   <span class="bid">
                     Current Available<br><strong>{{$data->quantity}}</strong><br> 
                   </span>
-                  <div class="text-button">
-                    <a href="{{url('book_details', $data->id)}}">View Item Details</a>
-                  </div>
+                  <div class="line-dec"></div>
+                  <span class="bid">
+                    <strong>Description</strong>
+                    <p>{{$data->description}}</p>
+                  </span>
                   <br>
                   <div class="">
                     <a class="btn btn-primary" href="{{url('borrow_books', $data->id)}}">Borrow</a>
@@ -93,7 +118,7 @@
         </div>
       </div>
     </div>
-  </div>
+
 
   @include('home.footer')
  

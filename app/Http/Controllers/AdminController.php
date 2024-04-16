@@ -16,6 +16,12 @@ use App\Models\Notification;
 
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\Facades\View;
+
+use Dompdf\Dompdf;
+
+use Dompdf\Options;
+
 
 class AdminController extends Controller
 {
@@ -331,4 +337,38 @@ class AdminController extends Controller
             ]);
         }
 
+        public function generateBookInventoryReport()
+        {
+            // Retrieve data from the database
+            $books = Book::with('category')->get();
+
+            // Render Blade view to HTML
+            $html = View::make('admin.book_inventory', ['books' => $books])->render();
+
+            // Create PDF
+            $pdf = new Dompdf();
+
+            // Load HTML into Dompdf for rendering
+            $pdf->loadHtml($html);
+
+            // Set options for PDF
+            $options = new Options();
+            $options->set('isPhpEnabled', true);
+            $pdf->setOptions($options);
+
+            // Render PDF
+            $pdf->render();
+
+            // Download PDF
+            return $pdf->stream('book_inventory_report.pdf');
+        }
+
+        public function showBookImages()
+        {
+           // $book = Book::all();
+
+            $books = Book::select('book_img')->get();
+
+            return view('admin.body', compact('books'));
+        }
 }
