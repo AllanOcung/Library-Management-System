@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>Book Requests</title>
 
     @include('admin.css')
 
@@ -70,8 +70,7 @@
                             </td>
                             <td>
                                 <a class="btn btn-warning" href="{{url('approve_book', $data->id)}}">approve</a>
-                                <a class="btn btn-danger" href="{{url('reject_book_request', $data->id)}}">reject</a>
-                                <a class="btn btn-primary" href="{{url('return_book', $data->id)}}">return</a>                                
+                                <a class="btn btn-danger" href="{{url('reject_book_request', $data->id)}}">reject</a>                             
                             </td>
                                                         
                         </tr>
